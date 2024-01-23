@@ -3,6 +3,7 @@ const dayjs = require('dayjs')
 dayjs().format()
 
 const express = require('express')
+const querystring = require('node:querystring')
 const app = express()
 const port = 3000
 //today
@@ -37,9 +38,20 @@ app.get('/api/current-time', (req, res) => {
   })
 //timestamp
 app.get('/api/timestamp', (req, res) => {
-    const timeStamp = dayjs().unix()
+    const timeStamp = dayjs().valueOf()
     res.status(200).json({"date": timeStamp})
   })
+  app.get('/api/timestamp?format=seconds', (req, res) => {
+    const timestamp = dayjs().unix()
+    res.status(200).json({"date": timestamp})
+  })
+
+  /* -grabs ?format=seconds, but not sure how to use it-
+  app.get('/api/timestamp', (req, res) => {
+    let format = req.query.format
+    let newTimeStamp = dayjs().unix(format)
+    res.status(200).json({"date": format})
+  }) */
   //not found
   app.get('*', function (req, res) {
     res.status(404).json({ error: 'route not found' })
