@@ -6,27 +6,62 @@ const express = require('express')
 const querystring = require('node:querystring')
 const app = express()
 const port = 3000
+
 //today
-app.get('/api/dates/today', (req, res) => {
+/* app.get('/api/dates/today', (req, res) => {
     const todayDate = dayjs().format("ddd MMM D, YYYY");
     res.status(200).json({"date": todayDate})
-})
+}) */
+app.get('/api/dates/today', (req, res) => {
+    const todayDate = dayjs().format("ddd MMM DD, YYYY");
+    const todayDateSimple = dayjs().format("YYYY MM DD");
+    let format = req.query.format
+    if (format == 'simple') {
+        res.status(200).json({"date": todayDateSimple})
+    }else {
+        res.status(200).json({"date": todayDate})
+    }
+  })
+
 //tomorrow
-app.get('/api/dates/tomorrow', (req, res) => {
+/* app.get('/api/dates/tomorrow', (req, res) => {
     const tomorrowDate = dayjs().add(1, 'day').format("ddd MMM D, YYYY");
     res.status(200).json({"date": tomorrowDate})
+  }) */
+  app.get('/api/dates/tomorrow', (req, res) => {
+    const tomorrowDate = dayjs().add(1, 'day').format("ddd MMM DD, YYYY");
+    const tomorrowDateSimple = dayjs().add(1, 'day').format("YYYY MM DD");
+    let format = req.query.format
+    if (format == 'simple') {
+        res.status(200).json({"date": tomorrowDateSimple})
+    }else {
+        res.status(200).json({"date": tomorrowDate})
+    }
   })
+
 //yesterday
-app.get('/api/dates/yesterday', (req, res) => {
+/* app.get('/api/dates/yesterday', (req, res) => {
     const yesterdayDate = dayjs().subtract(1, 'day').format("ddd MMM D, YYYY");
     res.status(200).json({"date": yesterdayDate})
+  }) */
+  app.get('/api/dates/yesterday', (req, res) => {
+    const yesterdayDate = dayjs().subtract(1, 'day').format("ddd MMM DD, YYYY");
+    const yesterdayDateSimple = dayjs().subtract(1, 'day').format("YYYY MM DD");
+    let format = req.query.format
+    if (format == 'simple') {
+        res.status(200).json({"date": yesterdayDateSimple})
+    }else {
+        res.status(200).json({"date": yesterdayDate})
+    }
   })
+
 //day of week
 app.get('/api/day-of-week/:year/:month/:day', (req, res) => {
     const userDate = `${req.params.year}.${req.params.month}.${req.params.day}`;
     const dayOfWeek = dayjs(userDate).format("ddd MMM D, YYYY");
     res.status(200).json({"date": dayOfWeek})
   })
+
 //current
 app.get('/api/current-time', (req, res) => {
     const currentTime = dayjs().format("HH:mm:ss")
