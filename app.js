@@ -14,7 +14,7 @@ const port = 3000
 }) */
 app.get('/api/dates/today', (req, res) => {
     const todayDate = dayjs().format("ddd MMM DD, YYYY");
-    const todayDateSimple = dayjs().format("YYYY MM DD");
+    const todayDateSimple = dayjs().format("YYYY-MM-DD");
     let format = req.query.format
     if (format == 'simple') {
         res.status(200).json({"date": todayDateSimple})
@@ -30,7 +30,7 @@ app.get('/api/dates/today', (req, res) => {
   }) */
   app.get('/api/dates/tomorrow', (req, res) => {
     const tomorrowDate = dayjs().add(1, 'day').format("ddd MMM DD, YYYY");
-    const tomorrowDateSimple = dayjs().add(1, 'day').format("YYYY MM DD");
+    const tomorrowDateSimple = dayjs().add(1, 'day').format("YYYY-MM-DD");
     let format = req.query.format
     if (format == 'simple') {
         res.status(200).json({"date": tomorrowDateSimple})
@@ -46,7 +46,7 @@ app.get('/api/dates/today', (req, res) => {
   }) */
   app.get('/api/dates/yesterday', (req, res) => {
     const yesterdayDate = dayjs().subtract(1, 'day').format("ddd MMM DD, YYYY");
-    const yesterdayDateSimple = dayjs().subtract(1, 'day').format("YYYY MM DD");
+    const yesterdayDateSimple = dayjs().subtract(1, 'day').format("YYYY-MM-DD");
     let format = req.query.format
     if (format == 'simple') {
         res.status(200).json({"date": yesterdayDateSimple})
