@@ -30,16 +30,25 @@ app.get('/api/day-of-week/:year/:month/:day', (req, res) => {
 //current
 app.get('/api/current-time', (req, res) => {
     const currentTime = dayjs().format("HH:mm:ss")
+    const currentTimeAlt = dayjs().format("hh:mm:ss")
+    let format = req.query.format
+    if (format == 12) {
+    res.status(200).json({"date": currentTimeAlt})
+  }else {
     res.status(200).json({"date": currentTime})
-  })
-  app.get('/api/current-time?format=12', (req, res) => {
-    const currentTime = dayjs().format("hh:mm:ss")
-    res.status(200).json({"date": currentTime})
-  })
+  }
+})
+
 //timestamp
 app.get('/api/timestamp', (req, res) => {
     const timeStamp = dayjs().valueOf()
-    res.status(200).json({"date": timeStamp})
+    const timeStampUnix = dayjs().unix()
+    let format = req.query.format
+    if (format == 'seconds') {
+        res.status(200).json({"date": timeStampUnix})
+    }else {
+        res.status(200).json({"date": timeStamp})
+    }
   })
   app.get('/api/timestamp?format=seconds', (req, res) => {
     const timestamp = dayjs().unix()
